@@ -2,21 +2,16 @@
 
 namespace App\Filament\Resources\OrderResource\Widgets;
 
-use Filament\Widgets\ChartWidget;
+use App\Models\Order;
+use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Filament\Widgets\StatsOverviewWidget\Stat;
 
-class OrderStats extends ChartWidget
+class OrderStats extends BaseWidget
 {
-    protected static ?string $heading = 'Chart';
-
-    protected function getData(): array
+    protected function getStats(): array
     {
         return [
-            //
+            Stat::make('New Orders', Order::query()->where('status', 'new')->count())
         ];
-    }
-
-    protected function getType(): string
-    {
-        return 'bar';
     }
 }
