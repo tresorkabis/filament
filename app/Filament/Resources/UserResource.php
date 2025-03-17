@@ -87,7 +87,7 @@ class UserResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return [''];
+        return ['name', 'email'];
     }
 
     public static function getPages(): array
