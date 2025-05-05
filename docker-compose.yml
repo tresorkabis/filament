@@ -1,0 +1,42 @@
+version: '3.9'
+
+networks:
+    cnpri:
+
+services:
+    nginx:
+        build:
+            context: .
+            dockerfile: docker/nginx.dockerfile
+        image: nginx:stable
+        ports:
+            - 8098:80
+        volumes:
+            - ./:/var/www/html
+        links:
+            - app
+        networks:
+            - cnpri
+
+    app:
+        build:
+            context: .
+            dockerfile: docker/app.dockerfile
+        volumes:
+            - ./:/var/www/html
+        links:
+            - db
+        networks:
+            - cnpri
+
+    db:
+        image: mysql:8.4.5
+        ports:
+            - 3306:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_USER=user
+            - MYSQL_PASSWORD=password
+            - MYSQL_DATABASE=filament
+        networks:
+            - cnpri

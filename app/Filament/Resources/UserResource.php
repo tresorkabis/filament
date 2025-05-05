@@ -41,6 +41,9 @@ class UserResource extends Resource
                 Forms\Components\DateTimePicker::make('email_verified_at')
                     ->label('Email Verified At')
                     ->default(now()),
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->preload(),
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->dehydrated(fn($state) => filled($state))
